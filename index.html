@@ -1,3 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>PackPop</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">PP</div>
+      <div class="titles">
+        <div class="title">PackPop</div>
+        <div class="subtitle">coins only • no cash out</div>
+      </div>
+    </div>
+
+    <div class="wallet">
+      <div class="pill"><span class="muted">Coins</span> <b id="coins">0</b></div>
+      <div class="pill"><span class="muted">Dust</span> <b id="dust">0</b></div>
+    </div>
+  </header>
+
+  <main class="screen">
+    <!-- EARN TAB -->
+    <section class="tab" data-tab="earn">
+      <div class="card">
+        <h2>Earn</h2>
+        <p class="muted">Daily coins + quick quests. No real money.</p>
+
+        <div class="row">
+          <button class="btn" id="btnDaily">Claim Daily</button>
+          <div class="muted small" id="dailyInfo">Ready</div>
+        </div>
+
+        <div class="list">
+          <div class="item">
+            <div>
+              <div class="itTitle">Quick Quest: Tap</div>
+              <div class="muted small">Click 25 times to earn coins.</div>
+            </div>
+            <div class="right">
+              <div class="muted small"><span id="tapCount">0</span>/25</div>
+              <button class="btn ghost" id="btnTap">Tap</button>
+            </div>
+          </div>
+
+          <div class="item">
+            <div>
+              <div class="itTitle">Quick Quest: Packs</div>
+              <div class="muted small">Open 3 packs today.</div>
+            </div>
+            <div class="right">
+              <div class="muted small"><span id="packsToday">0</span>/3</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2>Tips</h2>
+        <div class="tip">
+          Duplicates auto-convert to dust. Use dust to craft the exact card you want.
+        </div>
+      </div>
+    </section>
+
+    <!-- PACKS TAB -->
+    <section class="tab" data-tab="packs" hidden>
+      <div class="card">
+        <h2>Packs</h2>
+        <p class="muted small">Odds are shown. 5 cards per pack.</p>
+
+        <div class="packGrid">
+          <div class="packCard">
+            <div class="packHead">
+              <div>
+                <div class="packName">Common Pack</div>
+                <div class="muted small">Cost: 100 coins</div>
+              </div>
+              <span class="badge Common">Common</span>
+            </div>
+            <div class="odds small">C 80% • R 17% • E 2.7% • L 0.3%</div>
+            <button class="btn" data-pack="common">Open</button>
+          </div>
+
+          <div class="packCard">
+            <div class="packHead">
+              <div>
+                <div class="packName">Rare Pack</div>
+                <div class="muted small">Cost: 250 coins</div>
+              </div>
+              <span class="badge Rare">Rare</span>
+            </div>
+            <div class="odds small">C 60% • R 34% • E 5% • L 1%</div>
+            <button class="btn" data-pack="rare">Open</button>
+          </div>
+
+          <div class="packCard">
+            <div class="packHead">
+              <div>
+                <div class="packName">Epic Pack</div>
+                <div class="muted small">Cost: 500 coins</div>
+              </div>
+              <span class="badge Epic">Epic</span>
+            </div>
+            <div class="odds small">C 40% • R 45% • E 13% • L 2%</div>
+            <button class="btn" data-pack="epic">Open</button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2>Crafting</h2>
+        <p class="muted small">Spend dust to craft specific cards.</p>
+        <div class="craftGrid" id="craftGrid"></div>
+      </div>
+    </section>
+
+    <!-- OPEN TAB -->
+    <section class="tab" data-tab="open" hidden>
+      <div class="card">
+        <h2>Open</h2>
+        <p class="muted small">Latest pack results.</p>
+
+        <div id="openingArea" class="openingArea">
+          <div class="muted">Open a pack from the Packs tab.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLLECTION TAB -->
+    <section class="tab" data-tab="collection" hidden>
+      <div class="card">
+        <div class="headRow">
+          <div>
+            <h2>Collection</h2>
+            <div class="muted small">Filter and sort your cards.</div>
+          </div>
+
+          <div class="controls">
+            <select id="filterRarity">
+              <option value="all">All</option>
+              <option value="Common">Common</option>
+              <option value="Rare">Rare</option>
+              <option value="Epic">Epic</option>
+              <option value="Legendary">Legendary</option>
+            </select>
+
+            <select id="sortBy">
+              <option value="rarity">Rarity</option>
+              <option value="name">Name</option>
+              <option value="owned">Owned</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="collection" id="collection"></div>
+      </div>
+    </section>
+
+    <!-- SETTINGS TAB -->
+    <section class="tab" data-tab="settings" hidden>
+      <div class="card">
+        <h2>Settings</h2>
+        <p class="muted small">Local-only save. No accounts needed.</p>
+
+        <div class="list">
+          <div class="item">
+            <div>
+              <div class="itTitle">Save</div>
+              <div class="muted small">Manually save to localStorage.</div>
+            </div>
+            <button class="btn ghost" id="btnSave">Save</button>
+          </div>
+
+          <div class="item">
+            <div>
+              <div class="itTitle">Reset</div>
+              <div class="muted small">Delete all progress on this device.</div>
+            </div>
+            <button class="btn danger" id="btnReset">Reset</button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="tip">
+          If you want cross-device accounts later, we can add Firebase/Supabase.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bottom Tabs -->
+  <nav class="tabbar" role="navigation" aria-label="Tabs">
+    <button class="tabbtn active" data-go="earn">
+      <span class="icon">⬆️</span><span class="lbl">Earn</span>
+    </button>
+    <button class="tabbtn" data-go="packs">
+      <span class="icon">🎁</span><span class="lbl">Packs</span>
+    </button>
+    <button class="tabbtn" data-go="open">
+      <span class="icon">✨</span><span class="lbl">Open</span>
+    </button>
+    <button class="tabbtn" data-go="collection">
+      <span class="icon">🗂️</span><span class="lbl">Cards</span>
+    </button>
+    <button class="tabbtn" data-go="settings">
+      <span class="icon">⚙️</span><span class="lbl">Settings</span>
+    </button>
+  </nav>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
+styles.css
+css
+Copy code
 :root{
   --bg:#0b0f16;
   --panel:#121a27;
