@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PackPop (Coins Only)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">PP</div>
+      <div>
+        <div class="title">PackPop</div>
+        <div class="subtitle">coins only, no cash-out</div>
+      </div>
+    </div>
+
+    <div class="wallet">
+      <div class="pill"><span class="muted">Coins</span> <b id="coins">0</b></div>
+      <div class="pill"><span class="muted">Dust</span> <b id="dust">0</b></div>
+      <button class="btn ghost" id="btnSave">Save</button>
+      <button class="btn ghost" id="btnReset">Reset</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="card panel">
+      <h2>Earn</h2>
+      <p class="muted">Daily coins + quick quests. No real money.</p>
+
+      <div class="earnRow">
+        <button class="btn" id="btnDaily">Claim Daily</button>
+        <div class="muted small" id="dailyInfo">Ready</div>
+      </div>
+
+      <div class="quests">
+        <div class="quest">
+          <div>
+            <div class="qtitle">Quick Quest: Tap</div>
+            <div class="muted small">Click 25 times to earn coins.</div>
+          </div>
+          <div class="qright">
+            <div class="muted small"><span id="tapCount">0</span>/25</div>
+            <button class="btn ghost" id="btnTap">Tap</button>
+          </div>
+        </div>
+
+        <div class="quest">
+          <div>
+            <div class="qtitle">Quick Quest: Streak</div>
+            <div class="muted small">Open 3 packs today.</div>
+          </div>
+          <div class="qright">
+            <div class="muted small"><span id="packsToday">0</span>/3</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h2>Packs</h2>
+      <p class="muted small">Odds are shown. Duplicates convert to dust.</p>
+
+      <div class="packs">
+        <div class="pack">
+          <div class="packName">Common Pack</div>
+          <div class="muted small">Cost: 100 coins • 5 cards</div>
+          <div class="odds small">
+            Common 80% • Rare 17% • Epic 2.7% • Legendary 0.3%
+          </div>
+          <button class="btn" data-pack="common">Open</button>
+        </div>
+
+        <div class="pack">
+          <div class="packName">Rare Pack</div>
+          <div class="muted small">Cost: 250 coins • 5 cards</div>
+          <div class="odds small">
+            Common 60% • Rare 34% • Epic 5% • Legendary 1%
+          </div>
+          <button class="btn" data-pack="rare">Open</button>
+        </div>
+
+        <div class="pack">
+          <div class="packName">Epic Pack</div>
+          <div class="muted small">Cost: 500 coins • 5 cards</div>
+          <div class="odds small">
+            Common 40% • Rare 45% • Epic 13% • Legendary 2%
+          </div>
+          <button class="btn" data-pack="epic">Open</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card panel">
+      <div class="panelHead">
+        <h2>Openings</h2>
+        <div class="muted small">Latest pack results</div>
+      </div>
+
+      <div id="openingArea" class="openingArea">
+        <div class="muted">Open a pack to see results.</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="panelHead">
+        <h2>Crafting</h2>
+        <div class="muted small">Spend dust to craft specific cards</div>
+      </div>
+
+      <div class="craftGrid" id="craftGrid"></div>
+    </section>
+
+    <section class="card panel">
+      <div class="panelHead">
+        <h2>Collection</h2>
+        <div class="muted small">
+          Filter:
+          <select id="filterRarity">
+            <option value="all">All</option>
+            <option value="Common">Common</option>
+            <option value="Rare">Rare</option>
+            <option value="Epic">Epic</option>
+            <option value="Legendary">Legendary</option>
+          </select>
+          <select id="sortBy">
+            <option value="rarity">Sort: Rarity</option>
+            <option value="name">Sort: Name</option>
+            <option value="owned">Sort: Owned</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="collection" id="collection"></div>
+    </section>
+  </main>
+
+  <footer class="footer muted small">
+    PackPop stores saves locally in your browser (localStorage). No real-money features.
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
