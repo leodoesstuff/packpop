@@ -1,147 +1,265 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PackPop (Coins Only)</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <header class="topbar">
-    <div class="brand">
-      <div class="logo">PP</div>
-      <div>
-        <div class="title">PackPop</div>
-        <div class="subtitle">coins only, no cash-out</div>
-      </div>
-    </div>
+:root{
+  --bg:#0b0f16;
+  --panel:#121a27;
+  --panel2:#0f1622;
+  --text:#e8eefc;
+  --muted:#9fb0d0;
+  --line:#223049;
+  --btn:#2a74ff;
+  --btn2:#1b263a;
+  --danger:#ff5f6d;
+  --shadow: 0 14px 32px rgba(0,0,0,.38);
+  --r:18px;
+}
 
-    <div class="wallet">
-      <div class="pill"><span class="muted">Coins</span> <b id="coins">0</b></div>
-      <div class="pill"><span class="muted">Dust</span> <b id="dust">0</b></div>
-      <button class="btn ghost" id="btnSave">Save</button>
-      <button class="btn ghost" id="btnReset">Reset</button>
-    </div>
-  </header>
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:
+    radial-gradient(1200px 800px at 20% -10%, rgba(42,116,255,.22), transparent 55%),
+    radial-gradient(900px 600px at 90% 0%, rgba(53,208,127,.14), transparent 55%),
+    var(--bg);
+  color:var(--text);
+}
 
-  <main class="layout">
-    <section class="card panel">
-      <h2>Earn</h2>
-      <p class="muted">Daily coins + quick quests. No real money.</p>
+.topbar{
+  position:sticky; top:0;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:14px 14px;
+  background:rgba(11,15,22,.78);
+  backdrop-filter: blur(12px);
+  border-bottom:1px solid rgba(34,48,73,.6);
+  z-index:10;
+}
 
-      <div class="earnRow">
-        <button class="btn" id="btnDaily">Claim Daily</button>
-        <div class="muted small" id="dailyInfo">Ready</div>
-      </div>
+.brand{display:flex; gap:12px; align-items:center}
+.logo{
+  width:40px; height:40px; border-radius:14px;
+  display:grid; place-items:center;
+  background: linear-gradient(135deg, rgba(42,116,255,.95), rgba(53,208,127,.78));
+  box-shadow: var(--shadow);
+  font-weight:900;
+}
+.titles .title{font-weight:900; letter-spacing:.2px}
+.titles .subtitle{font-size:12px; color:var(--muted); margin-top:2px}
 
-      <div class="quests">
-        <div class="quest">
-          <div>
-            <div class="qtitle">Quick Quest: Tap</div>
-            <div class="muted small">Click 25 times to earn coins.</div>
-          </div>
-          <div class="qright">
-            <div class="muted small"><span id="tapCount">0</span>/25</div>
-            <button class="btn ghost" id="btnTap">Tap</button>
-          </div>
-        </div>
+.wallet{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
+.pill{
+  padding:8px 10px;
+  border:1px solid rgba(34,48,73,.85);
+  border-radius:999px;
+  background:rgba(18,26,39,.72);
+}
+.muted{color:var(--muted)}
+.small{font-size:12px}
 
-        <div class="quest">
-          <div>
-            <div class="qtitle">Quick Quest: Streak</div>
-            <div class="muted small">Open 3 packs today.</div>
-          </div>
-          <div class="qright">
-            <div class="muted small"><span id="packsToday">0</span>/3</div>
-          </div>
-        </div>
-      </div>
+.screen{
+  padding:14px;
+  padding-bottom: 92px; /* space for tabbar */
+  max-width: 980px;
+  margin: 0 auto;
+}
 
-      <div class="divider"></div>
+.card{
+  background: linear-gradient(180deg, rgba(18,26,39,.95), rgba(15,22,34,.95));
+  border:1px solid rgba(34,48,73,.85);
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  padding:14px;
+}
 
-      <h2>Packs</h2>
-      <p class="muted small">Odds are shown. Duplicates convert to dust.</p>
+h2{margin:0 0 8px 0}
 
-      <div class="packs">
-        <div class="pack">
-          <div class="packName">Common Pack</div>
-          <div class="muted small">Cost: 100 coins • 5 cards</div>
-          <div class="odds small">
-            Common 80% • Rare 17% • Epic 2.7% • Legendary 0.3%
-          </div>
-          <button class="btn" data-pack="common">Open</button>
-        </div>
+.row{
+  display:flex; gap:12px; align-items:center; justify-content:space-between;
+  margin-top:10px;
+}
 
-        <div class="pack">
-          <div class="packName">Rare Pack</div>
-          <div class="muted small">Cost: 250 coins • 5 cards</div>
-          <div class="odds small">
-            Common 60% • Rare 34% • Epic 5% • Legendary 1%
-          </div>
-          <button class="btn" data-pack="rare">Open</button>
-        </div>
+.btn{
+  border:none;
+  padding:10px 12px;
+  border-radius:14px;
+  background: var(--btn);
+  color:white;
+  font-weight:800;
+  cursor:pointer;
+}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform: translateY(1px)}
+.btn.ghost{
+  background: var(--btn2);
+  border:1px solid rgba(34,48,73,.95);
+}
+.btn.danger{background: var(--danger)}
 
-        <div class="pack">
-          <div class="packName">Epic Pack</div>
-          <div class="muted small">Cost: 500 coins • 5 cards</div>
-          <div class="odds small">
-            Common 40% • Rare 45% • Epic 13% • Legendary 2%
-          </div>
-          <button class="btn" data-pack="epic">Open</button>
-        </div>
-      </div>
-    </section>
+.divider{
+  height:1px; background: rgba(34,48,73,.85);
+  margin:14px 0;
+}
 
-    <section class="card panel">
-      <div class="panelHead">
-        <h2>Openings</h2>
-        <div class="muted small">Latest pack results</div>
-      </div>
+.list{display:flex; flex-direction:column; gap:10px; margin-top:12px}
+.item{
+  display:flex; justify-content:space-between; gap:12px;
+  padding:12px;
+  border-radius:16px;
+  background: rgba(15,22,34,.7);
+  border:1px solid rgba(34,48,73,.6);
+}
+.itTitle{font-weight:900}
+.right{display:flex; flex-direction:column; gap:8px; align-items:flex-end}
 
-      <div id="openingArea" class="openingArea">
-        <div class="muted">Open a pack to see results.</div>
-      </div>
+.tip{
+  padding:12px;
+  border-radius:16px;
+  background: rgba(42,116,255,.10);
+  border:1px solid rgba(42,116,255,.25);
+  color: rgba(232,238,252,.95);
+}
 
-      <div class="divider"></div>
+.packGrid{display:grid; gap:10px; margin-top:10px}
+.packCard{
+  padding:12px;
+  border-radius:16px;
+  background: rgba(15,22,34,.7);
+  border:1px solid rgba(34,48,73,.6);
+  display:grid;
+  gap:8px;
+}
+.packHead{display:flex; justify-content:space-between; align-items:center; gap:10px}
+.packName{font-weight:950}
+.odds{color: rgba(159,176,208,.95)}
 
-      <div class="panelHead">
-        <h2>Crafting</h2>
-        <div class="muted small">Spend dust to craft specific cards</div>
-      </div>
+.openingArea{
+  min-height: 220px;
+  display:grid;
+  gap:10px;
+  align-content:start;
+  padding:12px;
+  border-radius:16px;
+  background: rgba(15,22,34,.55);
+  border:1px dashed rgba(34,48,73,.85);
+}
 
-      <div class="craftGrid" id="craftGrid"></div>
-    </section>
+.revealRow{
+  display:grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap:10px;
+}
+@media (max-width: 820px){
+  .revealRow{grid-template-columns: repeat(2, minmax(0, 1fr));}
+}
 
-    <section class="card panel">
-      <div class="panelHead">
-        <h2>Collection</h2>
-        <div class="muted small">
-          Filter:
-          <select id="filterRarity">
-            <option value="all">All</option>
-            <option value="Common">Common</option>
-            <option value="Rare">Rare</option>
-            <option value="Epic">Epic</option>
-            <option value="Legendary">Legendary</option>
-          </select>
-          <select id="sortBy">
-            <option value="rarity">Sort: Rarity</option>
-            <option value="name">Sort: Name</option>
-            <option value="owned">Sort: Owned</option>
-          </select>
-        </div>
-      </div>
+.cardTile{
+  padding:10px;
+  border-radius:16px;
+  background: rgba(18,26,39,.78);
+  border:1px solid rgba(34,48,73,.78);
+  position:relative;
+  overflow:hidden;
+}
+.cardTile .name{font-weight:950}
+.meta{margin-top:6px}
 
-      <div class="collection" id="collection"></div>
-    </section>
-  </main>
+.badge{
+  display:inline-flex;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:950;
+  border:1px solid rgba(255,255,255,.12);
+}
+.badge.Common{background: rgba(159,176,208,.12)}
+.badge.Rare{background: rgba(42,116,255,.18)}
+.badge.Epic{background: rgba(173,84,255,.18)}
+.badge.Legendary{background: rgba(255,204,102,.2)}
 
-  <footer class="footer muted small">
-    PackPop stores saves locally in your browser (localStorage). No real-money features.
-  </footer>
+.glow{
+  position:absolute; inset:-40%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 45%);
+  transform: rotate(10deg);
+  pointer-events:none;
+  opacity:.65;
+}
 
-  <div class="toast" id="toast"></div>
+.collection{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap:10px;
+  margin-top:12px;
+}
+@media (max-width: 820px){
+  .collection{grid-template-columns: repeat(2, minmax(0, 1fr));}
+}
 
-  <script src="app.js"></script>
-</body>
-</html>
+.cOwned{display:flex; justify-content:space-between; align-items:center; margin-top:10px}
+.count{font-weight:950}
+.dustVal{font-size:12px; color:var(--muted)}
+
+.controls{
+  display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:flex-end;
+}
+select{
+  background: rgba(15,22,34,.75);
+  color: var(--text);
+  border:1px solid rgba(34,48,73,.9);
+  padding:8px 10px;
+  border-radius:12px;
+}
+
+.headRow{
+  display:flex; justify-content:space-between; gap:12px; align-items:flex-end;
+  flex-wrap:wrap;
+}
+
+/* Bottom Tab Bar */
+.tabbar{
+  position:fixed;
+  left:0; right:0; bottom:0;
+  padding:10px 10px calc(10px + env(safe-area-inset-bottom));
+  background: rgba(11,15,22,.86);
+  backdrop-filter: blur(12px);
+  border-top:1px solid rgba(34,48,73,.6);
+  display:grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap:8px;
+  z-index:20;
+}
+
+.tabbtn{
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:4px;
+  padding:10px 6px;
+  border-radius:16px;
+  border:1px solid rgba(34,48,73,.75);
+  background: rgba(18,26,39,.55);
+  color: var(--muted);
+  cursor:pointer;
+}
+.tabbtn .lbl{font-size:12px; font-weight:900}
+.tabbtn.active{
+  color: var(--text);
+  background: rgba(42,116,255,.20);
+  border-color: rgba(42,116,255,.35);
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:84px;
+  transform:translateX(-50%);
+  padding:10px 12px;
+  border-radius:16px;
+  background: rgba(18,26,39,.92);
+  border:1px solid rgba(34,48,73,.92);
+  box-shadow: var(--shadow);
+  opacity:0;
+  pointer-events:none;
+  transition: opacity .18s ease, transform .18s ease;
+  z-index:30;
+}
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(-4px);
+}
